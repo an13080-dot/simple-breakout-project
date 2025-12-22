@@ -9,16 +9,18 @@
 
 char* current_level_data;
 
-void load_level(const int offset)
+// I changed 'offset' to 'index'
+void load_level(const int index)
 {
-    current_level_index += offset;
+    //  I Used '=' instead of '+='
+    // To avoid jumping from level 1 to 3 to 5
+    current_level_index = index;
 
     if (current_level_index >= level_count) {
         game_state = victory_state;
         ClearBackground(BLACK);
-        init_victory_menu();
+        // reset point to 0
         current_level_index = 0;
-
         return;
     }
 
