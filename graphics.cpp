@@ -166,6 +166,15 @@ void draw_level()
             case BLOCKS:
                 draw_image(block_texture, texture_x_pos, texture_y_pos, cell_size);
                 break;
+            case '$': // or RED_BLOCK if you included game.h
+                DrawRectangle(
+                    static_cast<int>(texture_x_pos),
+                    static_cast<int>(texture_y_pos),
+                    static_cast<int>(cell_size),
+                    static_cast<int>(cell_size),
+                    RED
+                );
+                break;
             default:;
             }
         }
