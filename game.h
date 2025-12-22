@@ -20,7 +20,8 @@ enum game_state {
     in_game_state,
     paused_state,
     victory_state,
-    game_over_state
+    game_over_state,
+    instructions_state
 };
 
 // level 1
@@ -136,5 +137,7 @@ inline level levels[level_count] = {
 };
 
 inline game_state game_state = menu_state;
+//Scoring
+inline int player_score = 0;
 
 #endif
