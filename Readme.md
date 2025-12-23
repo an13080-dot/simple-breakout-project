@@ -11,7 +11,13 @@ The game should adhere to the best structured and procedural programming princip
 Be creative, and ensure to implement all the requirements outlined below in your project.
 
 ---
-
+##  Features
+1. **Custom Physics Engine:** Predictive AABB collision detection with sub-pixel correction.
+2. **Dynamic Level Loading:** Levels are parsed from character arrays, allowing for complex grid layouts.
+3. **Advanced Paddle Mechanics:** Ball reflection angles are calculated based on the hit point relative to the paddle center.
+4. **Special Block Types:**
+   1. `$` **Gold Blocks:** Rare, 500 points, triggers unique sound effects.
+   2. `%` **Big Walls:** Indestructible environmental obstacles.
 ## Core Requirements
 
 * **Title or Menu Screen**: The game should start with a title screen featuring a game logo and a message to start the game. Alternatively, it could be a menu screen with options to start the game, view the instructions, or quit the game.
