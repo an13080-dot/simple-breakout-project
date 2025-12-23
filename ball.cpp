@@ -32,16 +32,24 @@ void move_ball()
         ball_pos.y + ball_vel.y
     };
 
-    if (is_colliding_with_level_cell(next_ball_pos, ball_size, WALL)) {
-        if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, WALL)) {
+    // 1. WALL and BIG_WALL
+    bool hit_wall = is_colliding_with_level_cell(next_ball_pos, ball_size, WALL);
+    bool hit_big_wall = is_colliding_with_level_cell(next_ball_pos, ball_size, BIG_WALL);
+
+    if (hit_wall || hit_big_wall) {
+
+        char wall_type = hit_big_wall ? BIG_WALL : WALL;
+
+        if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, wall_type)) {
             ball_vel.x = -ball_vel.x;
             next_ball_pos.x = std::round(next_ball_pos.x);
         }
-        if (is_colliding_with_level_cell({ ball_pos.x, next_ball_pos.y }, ball_size, WALL)) {
+        if (is_colliding_with_level_cell({ ball_pos.x, next_ball_pos.y }, ball_size, wall_type)) {
             ball_vel.y = -ball_vel.y;
             next_ball_pos.y = std::round(next_ball_pos.y);
         }
 
+    // 2. Block collision
     } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, BLOCKS) ||
                is_colliding_with_level_cell(next_ball_pos, ball_size, '$')) {
 
@@ -65,25 +73,25 @@ void move_ball()
         --current_level_blocks;
 
         if (hit_type == '$') {
-            player_score += 200;
+            PlaySound(gold_sound);
+            player_score += 500;
         } else {
             player_score += 100;
         }
 
-               } else if (is_colliding_with_paddle(next_ball_pos, ball_size)) {
+    // 3. Paddle collision
+    } else if (is_colliding_with_paddle(next_ball_pos, ball_size)) {
+        float paddle_center_x = paddle_pos.x + paddle_size.x / 2.0f;
+        float ball_center_x = next_ball_pos.x + ball_size.x / 2.0f;
+        float hit_point = (ball_center_x - paddle_center_x) / (paddle_size.x / 2.0f);
 
-                   // 1. Calculate where the ball hit the paddle (0.0 is center, -1.0 is left, 1.0 is right)
-                   float paddle_center_x = paddle_pos.x + paddle_size.x / 2.0f;
-                   float ball_center_x = next_ball_pos.x + ball_size.x / 2.0f;
-                   float hit_point = (ball_center_x - paddle_center_x) / (paddle_size.x / 2.0f);
+        ball_vel.x = hit_point * std::abs(ball_vel.y) * 1.5f;
+        ball_vel.y = -std::abs(ball_vel.y);
 
-                   // 2. Adjust X velocity based on hit point (The "English" spin effect)
-                   // If hit right side, push ball right. If hit left, push left.
-                   ball_vel.x = hit_point * std::abs(ball_vel.y) * 1.5f; // 1.5f is the strength of the curve
-
-                   // 3. Bounce up
-                   ball_vel.y = -std::abs(ball_vel.y);
-               }
+        if (std::abs(hit_point) > 0.62f) {
+            PlaySound(acceleration_sound);
+        }
+    }
     ball_pos = next_ball_pos;
 }
 

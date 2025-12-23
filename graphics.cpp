@@ -153,6 +153,7 @@ void draw_level()
 {
     ClearBackground(BLACK);
 
+
     for (size_t row = 0; row < current_level.rows; ++row) {
         for (size_t column = 0; column < current_level.columns; ++column) {
             const char data = current_level.data[row * current_level.columns + column];
@@ -166,13 +167,22 @@ void draw_level()
             case BLOCKS:
                 draw_image(block_texture, texture_x_pos, texture_y_pos, cell_size);
                 break;
-            case '$': // or RED_BLOCK if you included game.h
+            case BIG_WALL:
                 DrawRectangle(
                     static_cast<int>(texture_x_pos),
                     static_cast<int>(texture_y_pos),
                     static_cast<int>(cell_size),
                     static_cast<int>(cell_size),
-                    RED
+                    WHITE
+                );
+                break;
+            case '$':
+                DrawRectangle(
+                    static_cast<int>(texture_x_pos),
+                    static_cast<int>(texture_y_pos),
+                    static_cast<int>(cell_size),
+                    static_cast<int>(cell_size),
+                    GOLD
                 );
                 break;
             default:;
@@ -181,11 +191,30 @@ void draw_level()
     }
 }
 
+// a bit new paddle
 void draw_paddle()
 {
     const float texture_x_pos = shift_to_center.x + paddle_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + paddle_pos.y * cell_size;
-    draw_image(paddle_texture, texture_x_pos, texture_y_pos, paddle_size.x * cell_size, paddle_size.y * cell_size);
+    const float width = paddle_size.x * cell_size;
+    const float height = paddle_size.y * cell_size;
+
+    // 1. main image
+    draw_image(paddle_texture, texture_x_pos, texture_y_pos, width, height);
+
+    // 2. color of the surface
+    DrawRectangle(
+        static_cast<int>(texture_x_pos),
+        static_cast<int>(texture_y_pos),
+        static_cast<int>(width),
+        9,
+        WHITE
+    );
+
+    // 3. Ice dots on the surface
+    DrawCircle(static_cast<int>(texture_x_pos + 30), static_cast<int>(texture_y_pos + height / 15), 5, SKYBLUE);
+    DrawCircle(static_cast<int>(texture_x_pos + 80), static_cast<int>(texture_y_pos + height / 15), 5, SKYBLUE);
+    DrawCircle(static_cast<int>(texture_x_pos + 130), static_cast<int>(texture_y_pos + height / 15), 5, SKYBLUE);
 }
 
 void draw_ball()

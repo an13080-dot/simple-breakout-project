@@ -12,8 +12,7 @@ char* current_level_data;
 // I changed 'offset' to 'index'
 void load_level(const int index)
 {
-    //  I Used '=' instead of '+='
-    // To avoid jumping from level 1 to 3 to 5
+    //  I Used '=' instead of '+=' to avoid jumping from level 1 to 3 to 5
     current_level_index = index;
 
     if (current_level_index >= level_count) {
@@ -30,8 +29,11 @@ void load_level(const int index)
     current_level_data = new char[rows * columns];
     for (int row = 0; row < rows; ++row) {
         for (int column = 0; column < columns; ++column) {
-            current_level_data[row * columns + column] = levels[current_level_index].data[row * columns + column];
-            if (current_level_data[row * columns + column] == BLOCKS) {
+            char cell = levels[current_level_index].data[row * columns + column];
+            current_level_data[row * columns + column] = cell;
+
+
+            if (cell == BLOCKS || cell == RED_BLOCK) {
                 ++current_level_blocks;
             }
         }
