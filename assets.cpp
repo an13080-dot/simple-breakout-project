@@ -2,10 +2,7 @@
 
 #include "raylib.h"
 
-Sound paddle_hit_sound;
-Sound Pause_sound;
-Sound acceleration_sound;
-Music Menu_sound;
+
 
 void load_fonts()
 {
@@ -39,11 +36,11 @@ void load_sounds()
 {
     InitAudioDevice();
     win_sound = LoadSound("data/sounds/win.wav");
-    lose_sound = LoadSound("data/sounds/lose.wav");
+    lost_sound = LoadSound("data/sounds/lost.wav");
 
-    paddle_hit_sound = LoadSound("data/sounds/paddle.wav");
     acceleration_sound = LoadSound("data/sounds/acceleration.wav");
-    Pause_sound = LoadSound("data/sounds/start.wav");
+    gold_sound = LoadSound("data/sounds/gold.wav");
+    milestone_sound = LoadSound("data/sounds/milestone.wav");
 // for Music
 Menu_sound = LoadMusicStream("data/music/Menu.wav");
 SetMusicVolume(Menu_sound, 0.5f);
@@ -52,12 +49,12 @@ SetMusicVolume(Menu_sound, 0.5f);
 void unload_sounds()
 {
     UnloadSound(win_sound);
-    UnloadSound(lose_sound);
-    CloseAudioDevice();
+    UnloadSound(lost_sound);
     //My sounds
-    UnloadSound(paddle_hit_sound);
     UnloadSound(acceleration_sound);
-    UnloadSound(Pause_sound);
+    UnloadSound(gold_sound);
+    UnloadSound(milestone_sound);
     //music
     UnloadMusicStream(Menu_sound);
+    CloseAudioDevice();
 }

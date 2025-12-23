@@ -15,13 +15,13 @@ inline Texture2D block_texture;
 inline sprite ball_sprite;
 
 inline Sound win_sound;
-inline Sound lose_sound;
+inline Sound lost_sound;
 //My sounds
-extern Sound paddle_hit_sound;
-extern Sound acceleration_sound;
-extern Sound Pause_sound;
+inline Sound acceleration_sound;
+inline Sound gold_sound;
+inline Sound milestone_sound;
 //My music
-extern Music Menu_sound;
+inline Music Menu_sound;
 
 
 void load_fonts();
