@@ -16,6 +16,13 @@ inline sprite ball_sprite;
 
 inline Sound win_sound;
 inline Sound lose_sound;
+//My sounds
+extern Sound paddle_hit_sound;
+extern Sound acceleration_sound;
+extern Sound Pause_sound;
+//My music
+extern Music Menu_sound;
+
 
 void load_fonts();
 void unload_fonts();
